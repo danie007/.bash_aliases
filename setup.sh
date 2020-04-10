@@ -39,12 +39,21 @@ grep -v "vm.swappiness" /etc/sysctl.conf > /etc/sysctl.conf 2> /dev/null
 echo -e "# Restricting swappiness\nvm.swappiness=10" >> /etc/sysctl.conf
 sysctl -p
 
-# echo "Changing dock position to bottom... (current user only)"
-# sudo -u $SUDO_USER gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
-# sudo -u $SUDO_USER gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
-# sudo -u $SUDO_USER gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
+# function to automatically detect the user and environment of a current session
+function run-in-user-session() {
+    _display_id=":$(find /tmp/.X11-unix/* | sed 's#/tmp/.X11-unix/X##' | head -n 1)"
+    _username=$(who | grep "\(${_display_id}\)" | awk '{print $1}')
+    _user_id=$(id -u "$_username")
+    _environment=("DISPLAY=$_display_id" "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$_user_id/bus")
+    sudo -Hu "$_username" env "${_environment[@]}" "$@"
+}
 
-apt --full-upgrade -y
+# echo "Changing dock position to bottom... (current user: $(sudo -u $SUDO_USER whoami) only)"
+# run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+# run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+# run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
+
+apt full-upgrade -y
 
 shutdown -r +1 "System is shutting down in one minute, save your work ASAP"
 
