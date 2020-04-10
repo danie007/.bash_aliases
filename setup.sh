@@ -1,12 +1,20 @@
-#!/bin/bash
+!/bin/bash
 
-sudo apt update
+ES_SUCCESS=0
+ES_NOPERM=1
+
+if [[ "${USER}" != "root" ]]; then
+    echo "run the $0 as root"
+    exit $ES_NOPERM
+fi
+
+apt update
 
 which curl &>/dev/null
 
 if [ $? -ne 0 ]; then
     echo "Installing curl..."
-    sudo apt install curl -y
+    apt install curl -y
 fi
 mv ~/.bashrc ~/.bashrc.old
 mv ~/.bash_aliases ~/.bash_aliases.old
@@ -15,7 +23,7 @@ curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc >~/
 
 cd
 source .bashrc
-sudo su
+su
 cp .bashrc .bash_aliases /root/
 
 echo "Setting vm swappiness to 10"
@@ -28,6 +36,8 @@ sysctl -p
 
 exit
 
-sudo apt --full-upgrade -y
+apt --full-upgrade -y
 
-sudo shutdown -r +1 "System is shutting down in one minute, save your work ASAP"
+shutdown -r +1 "System is shutting down in one minute, save your work ASAP"
+
+exit $ES_SUCCESS
