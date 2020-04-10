@@ -1,40 +1,48 @@
-!/bin/bash
+#!/bin/bash
 
 ES_SUCCESS=0
 ES_NOPERM=1
 
-if [[ "${USER}" != "root" ]]; then
+if [[ $EUID -ne 0 ]]; then
     echo "run the ${!#} as root"
     exit $ES_NOPERM
 fi
 
 apt update
 
-which curl &>/dev/null
+which curl &> /dev/null
 
 if [ $? -ne 0 ]; then
     echo "Installing curl..."
     apt install curl -y
 fi
-mv ~/.bashrc ~/.bashrc.old
-mv ~/.bash_aliases ~/.bash_aliases.old
-curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases >~/.bash_aliases
-curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc >~/.bashrc
+
+curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases > ~/.bash_aliases
+curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc > ~/.bashrc
+
+if [ -d "/home/$(logname)" ]; then
+    cp ~/.bash_aliases ~/.bashrc /home/$(logname)/
+    chown $(logname): /home/$(logname)/.bash_aliases
+    chown $(logname): /home/$(logname)/.bashrc
+fi
 
 cd
 source .bashrc
-su
 cp .bashrc .bash_aliases /root/
 
 echo "Setting vm swappiness to 10"
-echo -e "# Restricting swappiness\nvm.swappiness=10" >>/etc/sysctl.conf
+
+# basking up original configuration
+cp /etc/sysctl.conf /etc/sysctl.conf.orig
+
+# Removing old swappiness, if any and rewritng the file
+grep -v "vm.swappiness" /etc/sysctl.conf > /etc/sysctl.conf
+echo -e "# Restricting swappiness\nvm.swappiness=10" >> /etc/sysctl.conf
 sysctl -p
 
 # echo "Changing dock position to bottom... (current user only)"
 # gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
 # gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
-
-exit
 
 apt --full-upgrade -y
 
