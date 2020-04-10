@@ -21,14 +21,13 @@ curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_alias
 curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc > ~/.bashrc
 
 if [ -d "/home/$(logname)" ]; then
-    cp ~/.bash_aliases ~/.bashrc /home/$(logname)/
-    chown $(logname): /home/$(logname)/.bash_aliases
-    chown $(logname): /home/$(logname)/.bashrc
+    cp ~/.bash_aliases ~/.bashrc /home/$(logname)/ 2> /dev/null
+    chown $(logname): /home/$(logname)/.bash_aliases 2> /dev/null
+    chown $(logname): /home/$(logname)/.bashrc 2> /dev/null
 fi
 
 cd
 source .bashrc
-cp .bashrc .bash_aliases /root/
 
 echo "Setting vm swappiness to 10"
 
@@ -36,7 +35,7 @@ echo "Setting vm swappiness to 10"
 cp /etc/sysctl.conf /etc/sysctl.conf.orig
 
 # Removing old swappiness, if any and rewritng the file
-grep -v "vm.swappiness" /etc/sysctl.conf > /etc/sysctl.conf
+grep -v "vm.swappiness" /etc/sysctl.conf > /etc/sysctl.conf 2> /dev/null
 echo -e "# Restricting swappiness\nvm.swappiness=10" >> /etc/sysctl.conf
 sysctl -p
 
