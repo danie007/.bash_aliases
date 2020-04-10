@@ -4,7 +4,7 @@ ES_SUCCESS=0
 ES_NOPERM=1
 
 if [[ "${USER}" != "root" ]]; then
-    echo "run the $0 as root"
+    echo "run the ${!#} as root"
     exit $ES_NOPERM
 fi
 
