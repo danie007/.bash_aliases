@@ -10,7 +10,7 @@ alias update='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y 
 # cd alias
 alias ..='cd ..'
 
-# some more ls aliases
+# some ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -21,3 +21,11 @@ alias c='clear'
 
 # shutdown
 alias sd='echo Goodbye! && sudo shutdown -h now'
+
+# For Kali Linux 2020
+
+# # ifconfig
+# alias ifconf='sudo ifconfig'
+
+# # msfconsole & initialization
+# alias msfcon='sudo service postgresql start && sudo msfdb init && msfconsole'
