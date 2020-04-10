@@ -31,7 +31,7 @@ source .bashrc
 
 echo "Setting vm swappiness to 10"
 
-# basking up original configuration
+# backing up original configuration
 cp /etc/sysctl.conf /etc/sysctl.conf.orig
 
 # Removing old swappiness, if any and rewritng the file
@@ -40,8 +40,9 @@ echo -e "# Restricting swappiness\nvm.swappiness=10" >> /etc/sysctl.conf
 sysctl -p
 
 # echo "Changing dock position to bottom... (current user only)"
-# gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
-# gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+# sudo -u $SUDO_USER gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+# sudo -u $SUDO_USER gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+# sudo -u $SUDO_USER gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
 
 apt --full-upgrade -y
 
