@@ -58,7 +58,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     # Highlight the user name when logged in as root.
-    if [[ "${USER}" == "root" ]]; then
+    if [[ "${USER}" = "root" ]]; then
         PS1='${debian_chroot:+($debian_chroot)}\033[07m\t\033[00m \[\e[01;31m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\n> ' # Red
     else
         PS1='${debian_chroot:+($debian_chroot)}\033[07m\t\033[00m \[\033[01;32m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\n> ' # Green
