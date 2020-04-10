@@ -48,6 +48,9 @@ alias c='clear'
 # shutdown
 alias sd='echo Goodbye! && sudo shutdown -h now'
 
+# Return status of last command
+alias ret='echo $?'
+
 # For Kali Linux 2020
 
 # # ifconfig
