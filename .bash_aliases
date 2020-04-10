@@ -40,7 +40,7 @@ alias ..='cd ..'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias li='ls -aliCF'
+alias li='ls -aliF'
 
 # Clear terminal
 alias c='clear'
