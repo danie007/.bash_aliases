@@ -53,6 +53,8 @@ function run-in-user-session() {
 # run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
 # run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
 
+# apt install -y vim
+
 apt full-upgrade -y
 
 shutdown -r +1 "System is shutting down in one minute, save your work ASAP"
