@@ -58,3 +58,6 @@ alias ret='echo $?'
 
 # # msfconsole & initialization
 # alias msfcon='sudo service postgresql start && sudo msfdb init && msfconsole'
+
+# # dmesg
+# alias dmsg='sudo dmesg'
