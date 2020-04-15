@@ -10,8 +10,8 @@ fi
 
 apt update
 
+# Checking for curl
 which curl &> /dev/null
-
 if [ $? -ne 0 ]; then
     echo "Installing curl..."
     apt install curl -y
@@ -27,7 +27,7 @@ if [ -d "/home/$(logname)" ]; then
 fi
 
 cd
-source .bashrc
+# source .bashrc
 
 echo "Setting vm swappiness to 10"
 
@@ -53,10 +53,35 @@ function run-in-user-session() {
 # run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
 # run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
 
-# apt install -y vim
+# Installing basic utilities
+echo "Installing basic utilities"
+# apt install -y vim make gcc 
+
+# Checking for VS Code
+which code &> /dev/null
+if [ $? -ne 0 ]; then
+    # Installing visual studio code
+    echo "Installing visual studio code"
+    snap install --classic code    # Snap is pre-installed from Ubuntu 16.04
+
+    # Setting VS Code as the default text editor
+    update-alternatives --set editor /usr/bin/code
+fi
+
+# Checking for google chrome
+which google-chrome &> /dev/null
+if [ $? -ne 0 ]; then
+    echo "Installing google chrome"
+    curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > /tmp/chrome_stable.deb
+
+    apt install /tmp/./chrome_stable.deb
+fi
+
+# Setting favorite apps
+run-in-user-session dconf write /org/gnome/shell/favorite-apps "['google-chrome.desktop', 'gnome-calculator.desktop', 'org.gnome.Terminal.desktop', 'code_code.desktop']"
 
 apt full-upgrade -y
 
-shutdown -r +1 "System is shutting down in one minute, save your work ASAP"
+shutdown -r +1 "System will restart in 1 minute, save your work ASAP"
 
 exit $ES_SUCCESS
