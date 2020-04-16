@@ -50,14 +50,3 @@ alias sd='echo Goodbye! && sudo shutdown -h now'
 
 # Return status of last command
 alias ret='echo $?'
-
-# For Kali Linux 2020
-
-# # ifconfig
-# alias ifconf='sudo ifconfig'
-
-# # msfconsole & initialization
-# alias msfcon='sudo service postgresql start && sudo msfdb init && msfconsole'
-
-# # dmesg
-# alias dmsg='sudo dmesg'
