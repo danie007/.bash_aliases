@@ -71,10 +71,14 @@ EOT
             # Installing visual studio code
             echo "Installing visual studio code"
             snap install --classic code    # Snap is pre-installed from Ubuntu 16.04
-
-            # Setting VS Code as the default text editor
-            update-alternatives --set editor /usr/bin/code
+        else
+            # Updating visual studio code
+            echo "Updating visual studio code"
+            snap refresh --classic code
         fi
+
+        # Setting VS Code as the default text editor
+        update-alternatives --set editor /usr/bin/code
 
         # Checking for google chrome
         which google-chrome &> /dev/null
@@ -90,6 +94,7 @@ EOT
     fi
 
     apt full-upgrade -y
+    apt autoremove -y
 else
     echo ""
 	echo "  No network connection available!"
