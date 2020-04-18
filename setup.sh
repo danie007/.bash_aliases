@@ -21,7 +21,7 @@ function run-in-user-session() {
 }
 
 # Getting the static hostname of runtime
-S_HOSTNAME=$(hostnamectl | grep "Static hostname:" | rev | cut -d' ' -f1 | rev)
+S_HOSTNAME=$(hostnamectl | grep -i "operating system" | cut -d' ' -f5)
 
 # Check for internet connection before proceeding with internet based commands
 if ping -q -c 1 -W 1 $test_site > /dev/null; then
@@ -38,7 +38,7 @@ if ping -q -c 1 -W 1 $test_site > /dev/null; then
     curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases > ~/.bash_aliases
     curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc > ~/.bashrc
 
-    if [ "$S_HOSTNAME" = "kali" ]; then
+    if [ "$S_HOSTNAME" = "Kali" ]; then
         cat << EOT >> ~/.bash_aliases
         
 # For Kali Linux 2020
@@ -64,7 +64,7 @@ EOT
     echo "Installing basic utilities"
     apt install -y vim make gcc build-essential git
 
-    if [ "$S_HOSTNAME" = "ubuntu" ]; then
+    if [ "$S_HOSTNAME" = "Ubuntu" ]; then
         # Checking for VS Code
         which code &> /dev/null
         if [ $? -ne 0 ]; then
@@ -104,7 +104,7 @@ fi
 
 cd
 
-if [ "$S_HOSTNAME" = "ubuntu" ]; then
+if [ "$S_HOSTNAME" = "Ubuntu" ]; then
     echo "Changing dock position to bottom... (current user: $(sudo -u $SUDO_USER whoami) only)"
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
