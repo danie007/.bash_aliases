@@ -60,6 +60,7 @@ if [ "$color_prompt" = yes ]; then
     # Highlight the user name when logged in as root.
     # Inspired by Parrot OS
     if [[ "${EUID}" = 0 ]]; then
+    # Color codes from https://misc.flogisoft.com/bash/tip_colors_and_formatting
         PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \[\e[01;31m\]\u\e[0m\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]#\[\e[0m\]' # Red
     else
         PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \u\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # white
