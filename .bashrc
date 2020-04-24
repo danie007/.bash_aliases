@@ -58,13 +58,14 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     # Highlight the user name when logged in as root.
-    if [[ "${USER}" = "root" ]]; then
-        PS1='${debian_chroot:+($debian_chroot)}\033[07m\t\033[00m \[\e[01;31m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\n> ' # Red
+    # Inspired by Parrot OS
+    if [[ "${EUID}" = 0 ]]; then
+        PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \[\e[01;31m\]\u\e[0m\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]#\[\e[0m\]' # Red
     else
-        PS1='${debian_chroot:+($debian_chroot)}\033[07m\t\033[00m \[\033[01;32m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\n> ' # Green
+        PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \u\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # white
     fi
 else
-    PS1='${debian_chroot:+($debian_chroot)}\t \u@\h:\W\n> '
+    PS1='${debian_chroot:+($debian_chroot)}\t \u@\h:\w\n└──╼ \$'
 fi
 unset color_prompt force_color_prompt
 

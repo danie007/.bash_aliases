@@ -42,6 +42,11 @@ alias la='ls -A'
 alias l='ls -CF'
 alias li='ls -aliF'
 
+# sudo aliases
+alias _='sudo'
+alias _i='sudo -i'
+alias please='sudo'
+
 # Clear terminal
 alias c='clear'
 
