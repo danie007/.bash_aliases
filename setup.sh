@@ -35,8 +35,8 @@ if ping -q -c 1 -W 1 $test_site > /dev/null; then
         apt install curl -y
     fi
 
-    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases > ~/.bash_aliases
-    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc > ~/.bashrc
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/parrot_inspired/.bash_aliases > ~/.bash_aliases
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/parrot_inspired/.bashrc > ~/.bashrc
 
     if [ "$S_HOSTNAME" = "Kali" ]; then
         cat << EOT >> ~/.bash_aliases
