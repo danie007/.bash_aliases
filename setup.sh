@@ -62,7 +62,7 @@ EOT
 
     # Installing basic utilities
     echo "Installing basic utilities"
-    apt install -y vim make gcc build-essential git
+    apt install -y vim make gcc build-essential git net-tools
 
     if [ "$S_HOSTNAME" = "Ubuntu" ]; then
         # Checking for VS Code

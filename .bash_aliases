@@ -55,3 +55,6 @@ alias sd='echo Goodbye! && sudo shutdown -h now'
 
 # Return status of last command
 alias ret='echo $?'
+
+# git styling guide
+alias format='echo -e "Git status:\n\e[1;37mWhite\e[0m - clean\n\e[1;32mGreen\e[0m - changes are staged\n\e[1;31mRed\e[0m - uncommitted changes with nothing staged\n\e[1;33mYellow\e[0m - both staged and unstaged changes\n+ changes are staged and ready to commit\n! unstaged changes\n? untracked files\nS changes have been stashed\nP local commits need to be pushed to the remote"'
