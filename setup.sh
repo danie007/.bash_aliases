@@ -77,9 +77,6 @@ EOT
             snap refresh --classic code
         fi
 
-        # Setting VS Code as the default text editor
-        update-alternatives --set editor /usr/bin/code
-
         # Checking for google chrome
         which google-chrome &> /dev/null
         if [ $? -ne 0 ]; then
