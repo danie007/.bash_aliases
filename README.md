@@ -3,7 +3,7 @@ bash aliases for Debian based systems
 
 ## Initial setup command
 ```shell
-curl https://raw.githubusercontent.com/danie007/.bash_aliases/leagacy_version/setup.sh > ~/setup.sh \
+curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/setup.sh > ~/setup.sh \
 && sudo bash ~/setup.sh
 ```
 

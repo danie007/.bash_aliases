@@ -35,8 +35,8 @@ if ping -q -c 1 -W 1 $test_site > /dev/null; then
         apt install curl -y
     fi
 
-    curl https://raw.githubusercontent.com/danie007/.bash_aliases/leagacy_version/.bash_aliases > ~/.bash_aliases
-    curl https://raw.githubusercontent.com/danie007/.bash_aliases/leagacy_version/.bashrc > ~/.bashrc
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases > ~/.bash_aliases
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc > ~/.bashrc
 
     if [ "$S_HOSTNAME" = "Kali" ]; then
         cat << EOT >> ~/.bash_aliases
@@ -62,7 +62,7 @@ EOT
 
     # Installing basic utilities
     echo "Installing basic utilities"
-    apt install -y vim make gcc build-essential git
+    apt install -y vim make gcc build-essential git net-tools
 
     if [ "$S_HOSTNAME" = "Ubuntu" ]; then
         # Checking for VS Code
@@ -76,9 +76,6 @@ EOT
             echo "Updating visual studio code"
             snap refresh --classic code
         fi
-
-        # Setting VS Code as the default text editor
-        update-alternatives --set editor /usr/bin/code
 
         # Checking for google chrome
         which google-chrome &> /dev/null
