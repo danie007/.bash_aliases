@@ -56,15 +56,88 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Adds the current branch to the bash prompt when the working directory is
+# part of a Git repository. Includes color-coding and indicators to quickly
+# indicate the status of working directory.
+#
+# From https://askubuntu.com/a/851407/933983
+
+git_branch() {
+    # -- Finds and outputs the current branch name by parsing the list of
+    #    all branches
+    # -- Current branch is identified by an asterisk at the beginning
+    # -- If not in a Git repository, error message goes to /dev/null and
+    #    no output is produced
+    git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+git_status() {
+    # Outputs a series of indicators based on the status of the
+    # working directory:
+    # + changes are staged and ready to commit
+    # ! unstaged changes are present
+    # ? untracked files are present
+    # S changes have been stashed
+    # P local commits need to be pushed to the remote
+    local status="$(git status --porcelain 2>/dev/null)"
+    local output=''
+    [[ -n $(egrep '^[MADRC]' <<<"$status") ]] && output="$output+"
+    [[ -n $(egrep '^.[MD]' <<<"$status") ]] && output="$output!"
+    [[ -n $(egrep '^\?\?' <<<"$status") ]] && output="$output?"
+    [[ -n $(git stash list) ]] && output="${output}S"
+    [[ -n $(git log --branches --not --remotes) ]] && output="${output}P"
+    # [[ -n $output ]] && output="|$output"  # separate from branch name
+    echo $output
+}
+
+git_color() {
+    # Receives output of git_status as argument; produces appropriate color
+    # code based on status of working directory:
+    # - White if everything is clean
+    # - Green if all changes are staged
+    # - Red if there are uncommitted changes with nothing staged
+    # - Yellow if there are both staged and unstaged changes
+    local staged=$([[ $1 =~ \+ ]] && echo yes)
+    local dirty=$([[ $1 =~ [!\?] ]] && echo yes)
+    if [[ -n $staged ]] && [[ -n $dirty ]]; then
+        echo -e '\e[1;33m'  # bold yellow
+    elif [[ -n $staged ]]; then
+        echo -e '\e[1;32m'  # bold green
+    elif [[ -n $dirty ]]; then
+        echo -e '\e[1;31m'  # bold red
+    else
+        echo -e '\e[1;37m'  # bold white
+    fi
+}
+
+git_prompt() {
+    # First, get the branch name...
+    local branch=$(git_branch)
+    # Empty output? Then we're not in a Git repository, so bypass the rest
+    # of the function, producing no output
+    if [[ -n $branch ]]; then
+        local state=$(git_status)
+        local color=$(git_color $state)
+        # Now output the actual code to insert the branch and status
+        if [[ -z "$state" ]];then
+            echo -e "[\x01$color\x02$branch\x01\e[0m\x02]"  # last bit resets color
+        else    # separate from branch name
+            echo -e "[\x01$color\x02$branch\x01\e[0m\x02|\x01$color\x02$state\x01\e[0m\x02]"
+        fi
+    fi
+}
+
 if [ "$color_prompt" = yes ]; then
     # Highlight the user name when logged in as root.
-    if [[ "${USER}" = "root" ]]; then
-        PS1='${debian_chroot:+($debian_chroot)}\033[07m\t\033[00m \[\e[01;31m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\n> ' # Red
+    # Inspired by Parrot OS
+    # Color codes from https://misc.flogisoft.com/bash/tip_colors_and_formatting
+    if [[ "${EUID}" = 0 ]]; then
+        PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \[\e[01;31m\]\u\e[0m\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\] $(git_prompt)\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # Red
     else
-        PS1='${debian_chroot:+($debian_chroot)}\033[07m\t\033[00m \[\033[01;32m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\n> ' # Green
+        PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \u\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\] $(git_prompt)\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # white
     fi
 else
-    PS1='${debian_chroot:+($debian_chroot)}\t \u@\h:\W\n> '
+    PS1='${debian_chroot:+($debian_chroot)}\t \u@\h:\w $(git_prompt)\n└──╼ \$'
 fi
 unset color_prompt force_color_prompt
 
