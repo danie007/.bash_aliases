@@ -38,6 +38,7 @@ alias ..='cd ..'
 
 # some ls aliases
 alias ll='ls -alF'
+alias lh='ls -halF' # Long listing with human readable size values
 alias la='ls -A'
 alias l='ls -CF'
 alias li='ls -aliF'
