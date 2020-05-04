@@ -87,7 +87,7 @@ EOT
         fi
 
         # Setting favorite apps
-        run-in-user-session dconf write /org/gnome/shell/favorite-apps "['google-chrome.desktop', 'gnome-calculator.desktop', 'org.gnome.Terminal.desktop', 'code_code.desktop']"
+        run-in-user-session dconf write /org/gnome/shell/favorite-apps "['google-chrome.desktop', 'gnome-calculator.desktop', 'gnome-calculator_gnome-calculator.desktop', 'org.gnome.Terminal.desktop', 'code_code.desktop', 'org.gnome.Nautilus.desktop']"
     fi
 
     apt full-upgrade -y
