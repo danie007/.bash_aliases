@@ -105,7 +105,7 @@ if [ "$S_HOSTNAME" = "Ubuntu" ]; then
     echo "Changing dock position to bottom... (current user: $(sudo -u $SUDO_USER whoami) only)"
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
-    run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
+    run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 12
 fi
 
 echo "Setting vm swappiness to 10"
