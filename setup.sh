@@ -62,7 +62,7 @@ EOT
 
     # Installing basic utilities
     echo "Installing basic utilities"
-    apt install -y vim make gcc build-essential git net-tools
+    apt install -y vim make gcc build-essential git net-tools ssh
 
     if [ "$S_HOSTNAME" = "Ubuntu" ]; then
         # Checking for VS Code
@@ -92,6 +92,9 @@ EOT
 
     apt full-upgrade -y
     apt autoremove -y
+
+    # Allowing incoming SSH connections
+    ufw allow 22
 else
     echo ""
 	echo "  No network connection available!"
