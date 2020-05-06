@@ -116,9 +116,12 @@ echo "Setting vm swappiness to 10"
 # backing up original configuration
 cp /etc/sysctl.conf /etc/sysctl.conf.orig
 
-# Removing old swappiness, if any and rewritng the file
-grep -v "vm.swappiness" /etc/sysctl.conf.orig > /etc/sysctl.conf
+# Removing configuration, if any and rewritng the file
+grep -v "vm.swappiness" /etc/sysctl.conf.orig > /tmp/sysctl.conf
+grep -v "fs.inotify.max_user_watches" /tmp/sysctl.conf > /etc/sysctl.conf
+
 echo "vm.swappiness=10   # Restricting swap to 10%" >> /etc/sysctl.conf
+echo "fs.inotify.max_user_watches=524288    # Increasing the amount of inotify watchers (5,24,288 - max files that can be watched - 540MB)" >> /etc/sysctl.conf
 sysctl -p
 
 shutdown -r +1 "System will restart in 1 minute, save your work ASAP"
