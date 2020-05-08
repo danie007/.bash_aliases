@@ -36,7 +36,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Add an "alarm" alias for long running commands.
 # Provides audible feedback after the process ends (Repeats for 5 times)
 # Usage: sleep 10; alarm
-alias alarm='for i in 1..5; do aplay /usr/share/sounds/buzzer.wav &> /dev/null; sleep 60; done'
+alias alarm='for i in {1..5}; do aplay /usr/share/sounds/buzzer.wav &> /dev/null; sleep 39; done'
 
 # cd alias
 alias ..='cd ..'
