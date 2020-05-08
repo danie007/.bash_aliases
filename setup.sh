@@ -35,6 +35,12 @@ if ping -q -c 1 -W 1 $test_site > /dev/null; then
         apt install curl -y
     fi
 
+    # Make sure the folder for sound exists
+    mkdir -p /usr/share/sounds
+    # Downloading alarm sound file, as it'll be later used in alarm alias
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/buzzer.wav > /usr/share/sounds/buzzer.wav
+
+    # Downloading bash configurations
     curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases > ~/.bash_aliases
     curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc > ~/.bashrc
 
