@@ -111,10 +111,15 @@ fi
 cd
 
 if [ "$S_HOSTNAME" = "Ubuntu" ]; then
-    echo "Changing dock position to bottom... (current user: $(sudo -u $SUDO_USER whoami) only)"
+    echo "User settings customization: (current user: $(sudo -u $SUDO_USER whoami) only)"
+    echo "Changing dock position to bottom..."
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+    echo "Changing apps icon to left..."
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+    echo "Setting dock icon size to 12..."
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 12
+    echo "Enabling hot corners..."
+    run-in-user-session gsettings set org.gnome.shell enable-hot-corners true
 fi
 
 echo "Setting vm swappiness to 10"
