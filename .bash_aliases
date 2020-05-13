@@ -38,6 +38,10 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Usage: sleep 10; alarm
 alias alarm='for i in {1..5}; do aplay /usr/share/sounds/buzzer.wav &> /dev/null; sleep 39; done'
 
+# Screen with logging
+# Usage: scrn USB_no Logfile_location
+alias scrn='function _ser(){ sudo screen -S ser -L -Logfile /home/ux/$2 /dev/tty$1 115200; sudo screen -S ser -X colon "logfile flush 0^M"; };_ser'
+
 # cd alias
 alias ..='cd ..'
 
