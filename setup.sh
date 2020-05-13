@@ -65,7 +65,7 @@ cat << EOT >> ~/.bash_aliases
         
 # Screen with logging
 # Usage: scrn USB_no Logfile_location
-alias scrn='function _ser(){ sudo screen -S ser -L -Logfile /home/$(sudo -u $SUDO_USER whoami)/$2 /dev/ttyUSB$1 115200; sudo screen -S ser -X colon "logfile flush 0^M"; };_ser'
+alias scrn='function _ser(){ sudo screen -S ser -L -Logfile /home/$(sudo -u $SUDO_USER whoami)/\$2 /dev/ttyUSB\$1 115200; sudo screen -S ser -X colon "logfile flush 0^M"; };_ser'
 EOT
 
     if [ -d "/home/$(logname)" ]; then
