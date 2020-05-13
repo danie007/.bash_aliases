@@ -60,6 +60,14 @@ alias dmsg='sudo dmesg'
 EOT
     fi
 
+# Appendig screen alias
+cat << EOT >> ~/.bash_aliases
+        
+# Screen with logging
+# Usage: scrn USB_no Logfile_location
+alias scrn='function _ser(){ sudo screen -S ser -L -Logfile /home/$(sudo -u $SUDO_USER whoami)/$2 /dev/ttyUSB$1 115200; sudo screen -S ser -X colon "logfile flush 0^M"; };_ser'
+EOT
+
     if [ -d "/home/$(logname)" ]; then
         cp ~/.bash_aliases ~/.bashrc /home/$(logname)/ 2> /dev/null
         chown $(logname): /home/$(logname)/.bash_aliases 2> /dev/null
@@ -120,6 +128,8 @@ if [ "$S_HOSTNAME" = "Ubuntu" ]; then
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 12
     echo "Enabling hot corners..."
     run-in-user-session gsettings set org.gnome.shell enable-hot-corners true
+    echo "Setting dock icon's click action..."
+    run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock click-action minimize-or-previews
 fi
 
 echo "Setting vm swappiness to 10"
