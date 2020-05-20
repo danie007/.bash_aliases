@@ -14,8 +14,8 @@
 # fi
 
 # Repo updates
-alias aptupdate='sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove'
-alias update='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove'
+alias aptupdate='sudo apt update && sudo apt -y upgrade; sudo apt -y autoremove'
+alias update='sudo apt-get update && sudo apt-get -y upgrade; sudo apt-get -y autoremove; sudo snap refresh'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -64,3 +64,7 @@ alias ret='echo $?'
 
 # git styling guide
 alias format='echo -e "\nGit status:\n\e[1;37mWhite\e[0m - clean\n\e[1;32mGreen\e[0m - changes are staged\n\e[1;31mRed\e[0m - uncommitted changes with nothing staged\n\e[1;33mYellow\e[0m - both staged and unstaged changes\n+ changes are staged and ready to commit\n! unstaged changes\n? untracked files\nS changes have been stashed\nP local commits need to be pushed to the remote\n"'
+        
+# Screen with logging
+# Usage: scrn USB_no Logfile_location
+alias scrn='function _ser(){ sudo screen -S ser -L -Logfile /home/ux/$2 /dev/ttyUSB$1 115200; sudo screen -S ser -X colon "logfile flush 0^M"; };_ser'
