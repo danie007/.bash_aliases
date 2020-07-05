@@ -131,9 +131,9 @@ if [ "$color_prompt" = yes ]; then
     # Inspired by Parrot OS
     # Color codes from https://misc.flogisoft.com/bash/tip_colors_and_formatting
     if [[ "${EUID}" = 0 ]]; then
-        PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \[\e[01;31m\]\u\e[0m\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\] $(git_prompt)\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # Red
+        PS1='${debian_chroot:+($debian_chroot)}\n\e[07m\t\e[0m \[\e[01;31m\]\u\e[0m\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\] $(git_prompt)\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # Red
     else
-        PS1='${debian_chroot:+($debian_chroot)}\e[07m\t\e[0m \u\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\] $(git_prompt)\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # white
+        PS1='${debian_chroot:+($debian_chroot)}\n\e[07m\t\e[0m \u\[\e[33m\]@\[\e[01;32m\]\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\] $(git_prompt)\n\[\e[31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] \[\e[01;33m\]\$\[\e[0m\]' # white
     fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\t \u@\h:\w $(git_prompt)\n└──╼ \$'
