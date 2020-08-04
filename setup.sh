@@ -129,7 +129,7 @@ if [ "$S_HOSTNAME" = "Ubuntu" ]; then
     echo "Enabling hot corners..."
     run-in-user-session gsettings set org.gnome.shell enable-hot-corners true
     echo "Setting dock icon's click action..."
-    run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock click-action minimize-or-previews
+    run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock click-action minimize-or-overview
 fi
 
 echo "Setting vm swappiness to 10"
