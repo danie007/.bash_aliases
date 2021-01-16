@@ -24,12 +24,12 @@ function run-in-user-session() {
 S_HOSTNAME=$(hostnamectl | grep -i "operating system" | cut -d' ' -f5)
 
 # Check for internet connection before proceeding with internet based commands
-if ping -q -c 1 -W 1 $test_site > /dev/null; then
+if ping -q -c 1 -W 1 $test_site >/dev/null; then
 
     apt update
 
     # Checking for curl
-    which curl &> /dev/null
+    which curl &>/dev/null
     if [ $? -ne 0 ]; then
         echo "Installing curl..."
         apt install curl -y
@@ -38,14 +38,14 @@ if ping -q -c 1 -W 1 $test_site > /dev/null; then
     # Make sure the folder for sound exists
     mkdir -p /usr/share/sounds
     # Downloading alarm sound file, as it'll be later used in alarm alias
-    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/buzzer.wav > /usr/share/sounds/buzzer.wav
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/buzzer.wav >/usr/share/sounds/buzzer.wav
 
     # Downloading bash configurations
-    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases > ~/.bash_aliases
-    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc > ~/.bashrc
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bash_aliases >~/.bash_aliases
+    curl https://raw.githubusercontent.com/danie007/.bash_aliases/master/.bashrc >~/.bashrc
 
     if [ "$S_HOSTNAME" = "Kali" ]; then
-        cat << EOT >> ~/.bash_aliases
+        cat <<EOT >>~/.bash_aliases
         
 # For Kali Linux 2020
 
@@ -60,8 +60,8 @@ alias dmsg='sudo dmesg'
 EOT
     fi
 
-# Appendig screen alias
-cat << EOT >> ~/.bash_aliases
+    # Appendig screen alias
+    cat <<EOT >>~/.bash_aliases
         
 # Screen with logging
 # Usage: scrn USB_no Logfile_location
@@ -69,9 +69,9 @@ alias scrn='function _ser(){ sudo screen -S ser -L -Logfile /home/$(sudo -u $SUD
 EOT
 
     if [ -d "/home/$(logname)" ]; then
-        cp ~/.bash_aliases ~/.bashrc /home/$(logname)/ 2> /dev/null
-        chown $(logname): /home/$(logname)/.bash_aliases 2> /dev/null
-        chown $(logname): /home/$(logname)/.bashrc 2> /dev/null
+        cp ~/.bash_aliases ~/.bashrc /home/$(logname)/ 2>/dev/null
+        chown $(logname): /home/$(logname)/.bash_aliases 2>/dev/null
+        chown $(logname): /home/$(logname)/.bashrc 2>/dev/null
     fi
 
     # Installing basic utilities
@@ -80,11 +80,11 @@ EOT
 
     if [ "$S_HOSTNAME" = "Ubuntu" ]; then
         # Checking for VS Code
-        which code &> /dev/null
+        which code &>/dev/null
         if [ $? -ne 0 ]; then
             # Installing visual studio code
             echo "Installing visual studio code"
-            snap install --classic code    # Snap is pre-installed from Ubuntu 16.04
+            snap install --classic code # Snap is pre-installed from Ubuntu 16.04
         else
             # Updating visual studio code
             echo "Updating visual studio code"
@@ -92,10 +92,10 @@ EOT
         fi
 
         # Checking for google chrome
-        which google-chrome &> /dev/null
+        which google-chrome &>/dev/null
         if [ $? -ne 0 ]; then
             echo "Installing google chrome"
-            curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > /tmp/chrome_stable.deb
+            curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb >/tmp/chrome_stable.deb
 
             apt install /tmp/./chrome_stable.deb
         fi
@@ -111,7 +111,7 @@ EOT
     ufw allow 22
 else
     echo ""
-	echo "  No network connection available!"
+    echo "  No network connection available!"
     echo "  Functionalities will be reduced."
     echo ""
 fi
@@ -130,6 +130,8 @@ if [ "$S_HOSTNAME" = "Ubuntu" ]; then
     run-in-user-session gsettings set org.gnome.shell enable-hot-corners true
     echo "Setting dock icon's click action..."
     run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock click-action minimize-or-overview
+    echo "Setting mounted volumes to be not shown in dock..."
+    run-in-user-session gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
 fi
 
 echo "Setting vm swappiness to 10"
@@ -138,11 +140,11 @@ echo "Setting vm swappiness to 10"
 cp /etc/sysctl.conf /etc/sysctl.conf.orig
 
 # Removing configuration, if any and rewritng the file
-grep -v "vm.swappiness" /etc/sysctl.conf.orig > /tmp/sysctl.conf
-grep -v "fs.inotify.max_user_watches" /tmp/sysctl.conf > /etc/sysctl.conf
+grep -v "vm.swappiness" /etc/sysctl.conf.orig >/tmp/sysctl.conf
+grep -v "fs.inotify.max_user_watches" /tmp/sysctl.conf >/etc/sysctl.conf
 
-echo "vm.swappiness=10   # Restricting swap to 10%" >> /etc/sysctl.conf
-echo "fs.inotify.max_user_watches=524288    # Increasing the amount of inotify watchers (5,24,288 - max files that can be watched - 540MB)" >> /etc/sysctl.conf
+echo "vm.swappiness=10   # Restricting swap to 10%" >>/etc/sysctl.conf
+echo "fs.inotify.max_user_watches=524288    # Increasing the amount of inotify watchers (5,24,288 - max files that can be watched - 540MB)" >>/etc/sysctl.conf
 sysctl -p
 
 shutdown -r +1 "System will restart in 1 minute, save your work ASAP"

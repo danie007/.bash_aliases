@@ -99,13 +99,13 @@ git_color() {
     local staged=$([[ $1 =~ \+ ]] && echo yes)
     local dirty=$([[ $1 =~ [!\?] ]] && echo yes)
     if [[ -n $staged ]] && [[ -n $dirty ]]; then
-        echo -e '\e[1;33m'  # bold yellow
+        echo -e '\e[1;33m' # bold yellow
     elif [[ -n $staged ]]; then
-        echo -e '\e[1;32m'  # bold green
+        echo -e '\e[1;32m' # bold green
     elif [[ -n $dirty ]]; then
-        echo -e '\e[1;31m'  # bold red
+        echo -e '\e[1;31m' # bold red
     else
-        echo -e '\e[1;37m'  # bold white
+        echo -e '\e[1;37m' # bold white
     fi
 }
 
@@ -118,9 +118,9 @@ git_prompt() {
         local state=$(git_status)
         local color=$(git_color $state)
         # Now output the actual code to insert the branch and status
-        if [[ -z "$state" ]];then
-            echo -e "[\x01$color\x02$branch\x01\e[0m\x02]"  # last bit resets color
-        else    # separate from branch name
+        if [[ -z "$state" ]]; then
+            echo -e "[\x01$color\x02$branch\x01\e[0m\x02]" # last bit resets color
+        else                                               # separate from branch name
             echo -e "[\x01$color\x02$branch\x01\e[0m\x02|\x01$color\x02$state\x01\e[0m\x02]"
         fi
     fi
