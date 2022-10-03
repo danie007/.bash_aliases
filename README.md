@@ -15,3 +15,8 @@ sudo bash ~/setup.sh
 **NOTE:** Tested on Ubuntu 18.04, 19.10, 20.04, 20.10 & Kali 2020
 
 - This is also tested for Ubuntu 22.04
+
+
+# Hacktoberfest 2022
+
+This repository is open to `hacktoberfest` 2022 and the pull requests will be reviewed quicklly. Users are encouraged to make coding & non-coding changes
