@@ -13,3 +13,5 @@ sudo bash ~/setup.sh
 ```
 
 **NOTE:** Tested on Ubuntu 18.04, 19.10, 20.04, 20.10 & Kali 2020
+
+- This is also tested for Ubuntu 22.04
